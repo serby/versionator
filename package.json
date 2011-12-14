@@ -1,0 +1,19 @@
+{
+  "author": "Paul Serby <paul.serby@clock.co.uk>",
+  "name": "versionator",
+  "description": "Connect middleware to add false versions to static content paths. Allowing for cache busting when new version of a site are released.",
+  "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:PabloSerbo/versionator.git"
+  },
+  "main": "index.js",
+  "scripts": {
+    "test": "cake test"
+  },
+  "engines": {
+    "node": ">0.4.0"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}
