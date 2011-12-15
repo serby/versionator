@@ -21,7 +21,7 @@ task 'test', 'Runs all unit tests', (options) ->
 
 task 'npm-publish', 'Creates a tag based on version number in package.json then pushes and publishes to NPM', (options) ->
 	version = JSON.parse(fs.readFileSync('./package.json')).version
-	console.log version
+	log 'Publishing ' + version
 	exec 'git tag ' + version, execOutput
 	exec 'git push --tags', execOutput
 	exec 'npm publish', execOutput
