@@ -18,7 +18,7 @@ A better solution is to use versionator!
 
 ## Installation
 
-npm install versionator
+      npm install versionator
 
 ## Usage
 
