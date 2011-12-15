@@ -3,6 +3,11 @@ var
 	path = require('path');
 
 module.exports = function(version) {
+
+	if (!version) {
+		throw new Error('version is required');
+	}
+
 	return function(req, res, next) {
 		if (req.method !== 'GET') {
 			return next();
