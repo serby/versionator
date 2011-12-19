@@ -1,4 +1,4 @@
-# versionator - Static content versioning middleware for connect.
+# versionator - Static content versioning middleware for connect/express.
 
 versionator was built to solve the problem of static assests getting stuck in browser and proxy caches when new versions of the assets are deployed.
 
@@ -8,9 +8,9 @@ You set your static content to be cached and expire in 1 months time. This gives
 
 You deploy your site and all is good.
 
-Then you need to change sprite.png
+Then you need to change sprite.png or app.js
 
-You make your changes and redeploy sprite.png. The trouble now is that everyone who has looked at your site already has the old version in their browser cache. Not only that, any upstream proxies will also have a copy.
+You make your changes and redeploy. The trouble now is that everyone who has looked at your site already has the old version in their browser cache. Not only that, any upstream proxies will also have a copy.
 
 A possible solution is to rename your static assest every time you change them, but that is impractical as you also have to update all the references each time they change. If you have a single CSS sprite then this is a real pain.
 
@@ -36,13 +36,13 @@ Add versionator into your middleware stack before the static middleware:
 
 Public folder:
 
-	public/images/sprite.png
+	public/js/app.js
 
 In your HTML,CSS,JS add the version as an extra path.
 
 e.g.
 ### HTML
-      <script src='/js/v0.1.0/sprite.png' />
+      <script src='/js/v0.1.0/app.js' />
 
 You can of course manage this with a variable if you are using templating
 
@@ -57,13 +57,13 @@ versionator will strip URL path names containing the version string. req.url is 
 
 e.g.
 
-     /js/v0.1.0/app.js
+     req.url = '/js/v0.1.0/app.js'
 
 will become:
 
-     /js/app.js
+     req.url = '/js/app.js'
 
-Now all you need to do is increment app.version each deployment (We keep ours inline with our git tags using Cake the coffee-script build tool) then sit back and let your users enjoy the freshness.
+Now all you need to do is increment app.version each deployment (We keep ours inline with our git tags using cake, the coffee-script build tool) then sit back and let your users enjoy the freshness.
 
 
 ## Credits
