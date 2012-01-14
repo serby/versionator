@@ -11,10 +11,10 @@ task 'delintAll', 'Runs jshint on all js code', (options) ->
 	if options.file
 		paths = options.file
 
-	exec 'jshint ' + paths + ' --config support/jshint-config.json', execOutput
+	exec 'jshint ' + paths, execOutput
 
 task 'delint', 'Runs all modified or added files through jshint', (options) ->
-	exec 'jshint `git status --porcelain | sed -e "s/^...//g"` --config support/jshint-config.json', execOutput
+	exec 'jshint `git status --porcelain | sed -e "s/^...//g"`', execOutput
 
 task 'test', 'Runs all unit tests', (options) ->
 	exec 'mocha -r should -R List ', execOutput
