@@ -1,15 +1,15 @@
 {
-	"author": "Paul Serby <paul.serby@clock.co.uk>",
+	"author": "Paul Serby <paul@serby.net>",
 	"name": "versionator",
-	"description": "Static content versioning middleware for connect.",
-	"version": "0.0.1",
+	"description": "Static content versioning middleware for connect and express.",
+	"version": "0.0.2",
 	"repository": {
 		"type": "git",
-		"url": "git@github.com:PabloSerbo/versionator.git"
+		"url": "git@github.com:serby/versionator.git"
 	},
 	"main": "index.js",
 	"scripts": {
-		"test": "cake test"
+		"test": "mocha -r should -R List "
 	},
 	"engines": {
 		"node": ">0.4.0"
@@ -18,7 +18,6 @@
 	"devDependencies": {
 		"connect": ">= 1.0.0",
 		"should": ">= 0.3.0",
-
 		"request": "> 2.1.0"
 	}
 }
