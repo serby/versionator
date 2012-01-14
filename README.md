@@ -1,4 +1,4 @@
-# versionator - Static content versioning middleware for connect/express.
+# versionator - Static content versioning middleware for connect and express.
 
 versionator was built to solve the problem of static assests getting stuck in browser and proxy caches when new versions of the assets are deployed.
 
