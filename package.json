@@ -1,5 +1,5 @@
 {
-	"author": "Paul Serby <paul.serby@clock.co.uk>",
+	"author": "Paul Serby <paul@serby.net>",
 	"name": "versionator",
 	"description": "Static content versioning middleware for connect and express.",
 	"version": "0.0.2",
