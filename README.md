@@ -67,7 +67,7 @@ Now all you need to do is increment app.version each deployment (We keep ours in
 
 
 ## Credits
-[Paul Serby](https://github.com/PabloSerbo/)
+[Paul Serby](https://github.com/serby/)
 
 ## Licence
 Licenced under the [New BSD License](http://opensource.org/licenses/bsd-license.php)
