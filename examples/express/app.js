@@ -27,7 +27,7 @@ app.configure(function(){
       src: __dirname + '/public/',
       compile: stylusCompile }))
     .use(app.router)
-    .use(express.static(__dirname + '/public'));
+    .use(express.static(__dirname + '/public', { maxAge: 2592000000 }));
 });
 
 app.configure('development', function(){
