@@ -1,0 +1,1 @@
+alert('Example script loaded');
