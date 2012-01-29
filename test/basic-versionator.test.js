@@ -1,31 +1,31 @@
 var
 	appEngine,
 	assert = require('assert'),
-	versionator = require('../'),
 	request = require('request'),
+	versionator = require('../'),
 	appEngine = require('connect');
 
 describe('versionator', function() {
 
-	describe('init', function() {
+	describe('#createBasicMiddleware', function() {
 
 		it('throws an error if no version is passed', function() {
 			assert.throws(function() {
-				versionator();
+				versionator.createBasicMiddleware();
 			}, /version is required/);
 		});
 
 		it('returns a middleware function', function() {
-			versionator('0.0.0').should.be.a('function');
+			versionator.createBasicMiddleware('0.0.0').middleware.should.be.a('function');
 		});
 
 	});
 
-	describe('returned middleware', function() {
+	describe('basic middleware', function() {
 
 		function startServer() {
 			var app = appEngine.createServer(
-				versionator('v0.1.2'),
+				versionator.createBasicMiddleware('v0.1.2').middleware,
 				function(req, res, next) {
 					res.end(req.url);
 				}
