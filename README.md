@@ -1,18 +1,22 @@
 # versionator - Static content versioning middleware for connect and express.
 
-versionator was built to solve the problem of static assests getting stuck in browser and proxy caches when new versions of the assets are deployed.
+versionator was built to solve the problem of static assets getting stuck in browser and proxy caches when new versions of the assets are deployed.
 
 Without versionator this is what can happen:
 
-You set your static content to be cached and expire in 1 months time. This gives you more capacity on your web servers and a great rating on Google Pagespeed and ySlow.
+You set your static content to be cached and expire in 30 days time. 
+
+     express.static(__dirname + '/public', { maxAge: 2592000000 })
+
+This gives you more capacity on your web servers and a better rating on Google Pagespeed and ySlow.
 
 You deploy your site and all is good.
 
-Then you need to change sprite.png or app.js
+Then you need to make a change to sprite.png or app.js
 
 You make your changes and redeploy. The trouble now is that everyone who has looked at your site already has the old version in their browser cache. Not only that, any upstream proxies will also have a copy.
 
-A possible solution is to rename your static assest every time you change them, but that is impractical as you also have to update all the references each time they change. If you have a single CSS sprite then this is a real pain.
+A possible solution is to rename your static assets every time you change them, but that is impractical as you also have to update all the references each time they change. If you have a single CSS sprite then this is a real pain.
 
 A better solution is to use versionator!
 
@@ -30,7 +34,7 @@ Add versionator into your middleware stack before the static middleware:
 
       	app.use(versionator('v' + app.version))
         ....
-        app.use(express.static(__dirname + '/public'));
+        .use(express.static(__dirname + '/public', { maxAge: 2592000000 }));
 
        });
 
@@ -65,6 +69,7 @@ will become:
 
 Now all you need to do is increment app.version each deployment (We keep ours inline with our git tags using cake, the coffee-script build tool) then sit back and let your users enjoy the freshness.
 
+An example of how to use versionator with connect and express can be found in the examples folder.
 
 ## Credits
 [Paul Serby](https://github.com/serby/)
