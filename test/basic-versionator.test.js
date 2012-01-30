@@ -7,16 +7,16 @@ var
 
 describe('versionator', function() {
 
-	describe('#createBasicMiddleware', function() {
+	describe('#createBasic', function() {
 
 		it('throws an error if no version is passed', function() {
 			assert.throws(function() {
-				versionator.createBasicMiddleware();
+				versionator.createBasic();
 			}, /version is required/);
 		});
 
 		it('returns a middleware function', function() {
-			versionator.createBasicMiddleware('0.0.0').middleware.should.be.a('function');
+			versionator.createBasic('0.0.0').middleware.should.be.a('function');
 		});
 
 	});
@@ -25,7 +25,7 @@ describe('versionator', function() {
 
 		function startServer() {
 			var app = appEngine.createServer(
-				versionator.createBasicMiddleware('v0.1.2').middleware,
+				versionator.createBasic('v0.1.2').middleware,
 				function(req, res, next) {
 					res.end(req.url);
 				}

@@ -7,18 +7,18 @@ var
 
 describe('versionator', function() {
 
-	describe('#createMappedMiddleware', function() {
+	describe('#createMapped', function() {
 
 		it('throws an error if no map is passed', function() {
 			
 			(function() {
-				versionator.createMappedMiddleware();
+				versionator.createMapped();
 			}).should.throw('A hash map of paths is required');
 
 		});
 
 		it('returns a middleware function', function() {
-			versionator.createMappedMiddleware({}).middleware.should.be.a('function');
+			versionator.createMapped({}).middleware.should.be.a('function');
 		});
 
 	});
@@ -27,7 +27,7 @@ describe('versionator', function() {
 
 		function startServer(map) {
 			var app = appEngine.createServer(
-				versionator.createMappedMiddleware(map).middleware,
+				versionator.createMapped(map).middleware,
 				function(req, res, next) {
 					res.end(req.url);
 				}
