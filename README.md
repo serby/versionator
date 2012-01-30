@@ -31,10 +31,12 @@ A better solution is to use versionator!
 Add versionator into your middleware stack before the static middleware:
 
       app.version = '0.1.0';
+      var versionator = require('versionator');
+
 
       app.configure(function() {
 
-      	app.use(versionator('v' + app.version))
+      	app.use(versionator.createBasic(app.version).middleware('v' + app.version))
         ....
         .use(express.static(__dirname + '/public', { maxAge: 2592000000 }));
 
