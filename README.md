@@ -1,5 +1,7 @@
 # versionator - Static content versioning middleware for connect and express.
 
+[![build status](https://secure.travis-ci.org/serby/versionator.png)](http://travis-ci.org/serby/versionator)
+
 versionator was built to solve the problem of static assets getting stuck in browser and proxy caches when new versions of the assets are deployed.
 
 Without versionator this is what can happen:
@@ -72,7 +74,7 @@ Now all you need to do is increment app.version each deployment (We keep ours in
 An example of how to use versionator with connect and express can be found in the examples folder.
 
 ## Credits
-[Paul Serby](https://github.com/serby/)
+[Paul Serby](https://github.com/serby/) Follow me on [twitter](http://twitter.com/PabloSerbo)
 
 ## Licence
 Licenced under the [New BSD License](http://opensource.org/licenses/bsd-license.php)
