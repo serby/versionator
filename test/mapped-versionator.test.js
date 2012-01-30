@@ -48,7 +48,7 @@ describe('versionator', function() {
 			});
 		});
 
-		it('req.url is unchanged if no version match is found', function(done) {
+		it('req.url mapped url is mapped correctly', function(done) {
 
 			var app = startServer({'/images/sprite.png': '/images/VERSIONHASH/sprite.png' });
 
