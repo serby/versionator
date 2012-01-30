@@ -9,7 +9,7 @@
 	},
 	"main": "index.js",
 	"scripts": {
-		"test": "mocha -r should -R List "
+		"test": "mocha -r should"
 	},
 	"engines": {
 		"node": ">0.4.0"
