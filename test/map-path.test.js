@@ -4,12 +4,12 @@ var
 	versionator = require('../'),
 	appEngine = require('connect'),
 	fs = require('fs'),
+	mkdirp = require('mkdirp'),
 	async = require('async');
 
 function createFiles(dirPath, files, callback) {
 	var fns = [
-		async.apply(fs.mkdir, dirPath),
-		async.apply(fs.mkdir, dirPath + '/sub')
+		async.apply(mkdirp, dirPath + '/sub')
 	];
 	
 	Object.keys(files).forEach(function(filename) {
