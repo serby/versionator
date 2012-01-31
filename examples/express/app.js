@@ -22,7 +22,7 @@ app.configure(function(){
     .set('view engine', 'jade')
     .use(express.bodyParser())
     .use(express.methodOverride())
-    .use(versionator('v' + app.version))
+    .use(versionator.createBasic('v' + app.version).middleware)
     .use(stylus.middleware({ 
       src: __dirname + '/public/',
       compile: stylusCompile }))
