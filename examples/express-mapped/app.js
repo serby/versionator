@@ -10,7 +10,7 @@ versionator.createMapFromPath(__dirname + '/public', function(error, staticFileM
 
   var mappedVersion = versionator.createMapped(staticFileMap);
 
-  // Define a custom compile so version can be got from inside the .styl
+  // Define a custom compile so versionPath can be got from inside the .styl
   function stylusCompile(str, path) {
     return stylus(str)
       .set('filename', path)
