@@ -6,23 +6,30 @@ var
 
 app.version = '0.1';
 
-// Define a custom compile so version can be got from inside the .styl
-function stylusCompile(str, path) {
-  return stylus(str)
-    .set('filename', path)
-    .set('warn', true)
-    .set('compress', true)
-    .define('version', function() { return app.version; });
-}
-
 // Configuration
 app.configure(function(){
+
+  var basic = versionator.createBasic('v' + app.version);
+
+  app.helpers({
+    versionPath: basic.versionPath
+  });
+
+  // Define a custom compile so version can be got from inside the .styl
+  function stylusCompile(str, path) {
+    return stylus(str)
+      .set('filename', path)
+      .set('warn', true)
+      .set('compress', true)
+      .define('versionPath', basic.versionPath);
+  }
+
   app
     .set('views', __dirname + '/views')
     .set('view engine', 'jade')
     .use(express.bodyParser())
     .use(express.methodOverride())
-    .use(versionator.createBasic('v' + app.version).middleware)
+    .use(basic.middleware)
     .use(stylus.middleware({ 
       src: __dirname + '/public/',
       compile: stylusCompile }))

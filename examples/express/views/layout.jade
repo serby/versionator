@@ -2,7 +2,7 @@
 html
   head
     title= title
-    link(rel='stylesheet', href='/css/v#{app.version}/style.css')
+    link(rel='stylesheet', href=versionPath('/css/style.css'))
   body
     block body
       h1 Versionator Example
