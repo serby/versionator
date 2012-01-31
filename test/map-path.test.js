@@ -63,10 +63,10 @@ describe('versionator', function() {
 			versionator.createMapFromPath(tmpPath, function(error, results) {
 				
 				var a = {
-					'/a': 'd41d8cd98f00b204e9800998ecf8427e', 
-					'/b': '8b1a9953c4611296a827abf8c47804d7',
-					'/c': 'e509465ef513154988e088d6ad3c21bf',
-					'/sub/a': '49f68a5c8493ec2c0bf489821c21fc3b' }.should.eql(results);
+					'/a': '/d41d8cd98f00b204e9800998ecf8427e/a', 
+					'/b': '/8b1a9953c4611296a827abf8c47804d7/b',
+					'/c': '/e509465ef513154988e088d6ad3c21bf/c',
+					'/sub/a': '/sub/49f68a5c8493ec2c0bf489821c21fc3b/a' }.should.eql(results);
 
 				done();
 			});
