@@ -19,7 +19,20 @@ describe('versionator', function() {
 			versionator.createBasic('0.0.0').middleware.should.be.a('function');
 		});
 
+		describe('#versionPath', function() {	
+			it('should inject the version correctly', function() {
+				var basic = versionator.createBasic('v0.0.0');
+				basic.versionPath('/js/test.js').should.eql('/js/v0.0.0/test.js');	
+			});
+			it('strings without a \'/\' will be left unchanged' , function() {
+				var basic = versionator.createBasic('v0.0.0');
+				basic.versionPath('Hello this is an odd path').should.eql('Hello this is an odd path');	
+			});
+		});
+
 	});
+
+	
 
 	describe('basic middleware', function() {
 

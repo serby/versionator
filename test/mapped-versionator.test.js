@@ -21,6 +21,17 @@ describe('versionator', function() {
 			versionator.createMapped({}).middleware.should.be.a('function');
 		});
 
+		describe('#versionPath', function() {	
+			it('should inject the mapped url correctly', function() {
+				var mapped = versionator.createMapped({ '/js/test.js': '/js/HASH/test.js'});
+				mapped.versionPath('/js/test.js').should.eql('/js/HASH/test.js');	
+			});
+			it('strings without a \'/\' will be left unchanged' , function() {
+				var mapped = versionator.createMapped({ '/js/test.js': '/js/HASH/test.js'});
+				mapped.versionPath('Hello this is an odd path').should.eql('Hello this is an odd path');	
+			});
+		});
+
 	});
 
 	describe('mapped middleware', function() {
