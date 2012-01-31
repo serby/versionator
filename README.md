@@ -28,19 +28,27 @@ A better solution is to use versionator!
 
 ## Usage
 
+### Basic Middleware
+
+The simplest way to use versionator is to use the basic middleware which looks for the given 
+version number in a url path and strips it out.
+
 Add versionator into your middleware stack before the static middleware:
 
-      app.version = '0.1.0';
-      var versionator = require('versionator');
+```js
 
+app.version = '0.1.0';
+var basic = require('versionator').createBasic(app.version);
 
-      app.configure(function() {
+app.configure(function() {
 
-      	app.use(versionator.createBasic(app.version).middleware('v' + app.version))
-        ....
-        .use(express.static(__dirname + '/public', { maxAge: 2592000000 }));
+  app.use(basic.middleware('v' + app.version))
+  ....
+  .use(express.static(__dirname + '/public', { maxAge: 2592000000 }));
 
-       });
+});
+
+```
 
 Public folder:
 
@@ -52,16 +60,31 @@ e.g.
 ### HTML
       <script src='/js/v0.1.0/app.js' />
 
-You can of course manage this with a variable if you are using templating
+There is also a URL versioning helper that will convert paths for you. 
+You can expose as a helper like so:
 
-### Templating
-      <script src='/js/v#{app.version}/app.js' />
+```js
+
+app.configure(function() {
+
+  // This exposes the helper to the views
+  app.helpers({
+    versionPath: basic.versionPath
+  });
+
+});
+
+```
 
 ### Jade
-      script(src='/js/v#{app.version}/app.js')
 
+This can then be used in Jade like so
 
-versionator will strip URL path names containing the version string. req.url is then modified for all other middleware.
+      script(src=versionPath(/js/app.js))
+
+### Middleware
+
+versionator middleware will strip URL path names containing the version string. req.url is then modified for all other middleware.
 
 e.g.
 
@@ -75,8 +98,42 @@ Now all you need to do is increment app.version each deployment (We keep ours in
 
 An example of how to use versionator with connect and express can be found in the examples folder.
 
+### Mapped Middleware
+
+You can also use versionator to add a hash, based on the content of the file, to the url path.
+This way the url path will only change if the file has changed.
+
+To do this you must first create a hash for all the files in the public folder. 
+This can be done as the application starts or read from a file that is created on deployment.
+
+```js
+
+versionator.createMapFromPath(__dirname + '/public', function(error, staticFileMap) {
+
+  var mappedVersion = versionator.createMapped(staticFileMap);
+
+  app.configure(function(){
+
+    // This exposes the helper to the views
+    app.helpers({
+      versionPath: mappedVersion.versionPath
+    });
+
+    app
+      .set('views', __dirname + '/views')
+      .set('view engine', 'jade')
+      .use(express.bodyParser())
+      .use(express.methodOverride())
+      .use(mappedVersion.middleware)
+      ....
+  });
+
+  ....
+});
+```
+
 ## Credits
-[Paul Serby](https://github.com/serby/) Follow me on [twitter](http://twitter.com/PabloSerbo)
+[Paul Serby](https://github.com/serby/) follow me on [twitter](http://twitter.com/PabloSerbo)
 
 ## Licence
 Licenced under the [New BSD License](http://opensource.org/licenses/bsd-license.php)
