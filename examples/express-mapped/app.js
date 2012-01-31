@@ -6,23 +6,23 @@ var
 
 app.version = '0.1';
 
-// Define a custom compile so version can be got from inside the .styl
-function stylusCompile(str, path) {
-  return stylus(str)
-    .set('filename', path)
-    .set('warn', true)
-    .set('compress', true)
-    .define('version', function() { return app.version; });
-}
-
 versionator.createMapFromPath(__dirname + '/public', function(error, staticFileMap) {
 
   var mappedVersion = versionator.createMapped(staticFileMap);
 
+  // Define a custom compile so version can be got from inside the .styl
+  function stylusCompile(str, path) {
+    return stylus(str)
+      .set('filename', path)
+      .set('warn', true)
+      .set('compress', true)
+      .define('versionPath', mappedVersion.versionPath);
+  }
+
   // Configuration
   app.configure(function(){
     app.helpers({
-      pathMap: mappedVersion.pathMap
+      versionPath: mappedVersion.versionPath
     });
 
     app
