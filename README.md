@@ -131,6 +131,8 @@ versionator.createMapFromPath(__dirname + '/public', function(error, staticFileM
   ....
 });
 ```
+If you use the helper you can switch methods without any changes to your view code.
+
 
 ## Credits
 [Paul Serby](https://github.com/serby/) follow me on [twitter](http://twitter.com/PabloSerbo)
