@@ -1,33 +1,33 @@
 {
-	"author": "Paul Serby <paul@serby.net>",
-	"name": "versionator",
-	"description": "Static content versioning middleware for connect and express.",
-	"version": "0.1.1",
-	"repository": {
-		"type": "git",
-		"url": "git@github.com:serby/versionator.git"
-	},
-	"main": "index.js",
-	"scripts": {
-		"test": "mocha -r should"
-	},
-	"engines": {
-		"node": ">0.4.0"
-	},
-	"dependencies": {
-		"async": "~0.1",
-		"underscore": "~1.3",
-		"walker": "~1.0"
-	},
-	"devDependencies": {
-		"coffee-script": "1.2.0",
-		"express": "~2.5",
-		"connect": ">= 1.0.0",
-		"should": ">= 0.5.0",
-		"mocha": ">= 0.9.0",
-		"request": "> 2.1.0",
-		"stylus": ">= 0.22.0",
-		"jade": ">= 0.20.0",
-		"mkdirp": "~0.3"
-	}
+  "author": "Paul Serby <paul@serby.net>",
+  "name": "versionator",
+  "description": "Static content versioning middleware for connect and express.",
+  "version": "0.1.1",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:serby/versionator.git"
+  },
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha -r should"
+  },
+  "engines": {
+    "node": ">0.4.0"
+  },
+  "dependencies": {
+    "async": "~0.1",
+    "underscore": "~1.3",
+    "walker": "~1.0"
+  },
+  "devDependencies": {
+    "coffee-script": "1.2.0",
+    "express": "~2.5",
+    "connect": ">= 1.0.0",
+    "should": ">= 0.5.0",
+    "mocha": ">= 0.9.0",
+    "request": "> 2.1.0",
+    "stylus": ">= 0.22.0",
+    "jade": ">= 0.20.0",
+    "mkdirp": "~0.3"
+  }
 }
