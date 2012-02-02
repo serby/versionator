@@ -21,7 +21,9 @@ app.configure(function(){
       .set('filename', path)
       .set('warn', true)
       .set('compress', true)
-      .define('versionPath', basic.versionPath);
+      .define('versionPath', function(urlPath) {
+        return 'url(' + basic.versionPath(urlPath) + ')';
+      });
   }
 
   app

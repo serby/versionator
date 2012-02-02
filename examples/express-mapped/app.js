@@ -16,7 +16,9 @@ versionator.createMapFromPath(__dirname + '/public', function(error, staticFileM
       .set('filename', path)
       .set('warn', true)
       .set('compress', true)
-      .define('versionPath', mappedVersion.versionPath);
+      .define('versionPath', function(urlPath) {
+        return 'url(' + mappedVersion.versionPath(urlPath) + ')';
+      });
   }
 
   // Configuration
