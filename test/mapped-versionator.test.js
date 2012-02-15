@@ -42,20 +42,21 @@ describe('versionator', function() {
 	describe('mapped middleware', function() {
 
 		function startServer(map) {
+		    var mapped = versionator.createMapped(map)
 			var app = appEngine.createServer(
-				versionator.createMapped(map).middleware,
+				mapped.middleware,
 				function(req, res, next) {
 					res.end(req.url);
 				}
 			);
 
 			app.listen(9898);
-			return app;
+			return {'app': app, 'mapped': mapped};
 		}
 
 		it('req.url is unchanged if no version match is found', function(done) {
 
-			var app = startServer({});
+			var app = startServer({}).app;
 
 			request('http://localhost:9898/images/sprite.png', function(error, response, data) {
 				data.should.eql('/images/sprite.png');
@@ -66,7 +67,7 @@ describe('versionator', function() {
 
 		it('req.url mapped url is mapped correctly', function(done) {
 
-			var app = startServer({'/images/sprite.png': '/images/VERSIONHASH/sprite.png' });
+			var app = startServer({'/images/sprite.png': '/images/VERSIONHASH/sprite.png' }).app;
 
 			request('http://localhost:9898/images/VERSIONHASH/sprite.png', function(error, response, data) {
 				data.should.eql('/images/sprite.png');
@@ -75,6 +76,20 @@ describe('versionator', function() {
 			});
 		});
 
+		it('req.url mapped url is mapped correctly after hash change', function(done) {
+
+			var appObj = startServer({'/images/sprite.png': '/images/VERSIONHASH/sprite.png' });
+            var app = appObj.app;
+            var mapped = appObj.mapped;
+            
+            mapped.modifyMap({ '/images/sprite.png': '/images/OTHERHASH/sprite.png' });
+
+			request('http://localhost:9898/images/OTHERHASH/sprite.png', function(error, response, data) {
+				data.should.eql('/images/sprite.png');
+				app.close();
+				done();
+			});
+		});
 
 	});
 
