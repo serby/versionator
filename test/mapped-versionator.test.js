@@ -26,6 +26,11 @@ describe('versionator', function() {
 				var mapped = versionator.createMapped({ '/js/test.js': '/js/HASH/test.js'});
 				mapped.versionPath('/js/test.js').should.eql('/js/HASH/test.js');	
 			});
+			it('should accept a modified map', function() {
+				var mapped = versionator.createMapped({ '/js/test.js': '/js/HASH/test.js'});
+				mapped.modifyMap({ '/js/test.js': '/js/OTHERHASH/test.js'});
+				mapped.versionPath('/js/test.js').should.eql('/js/OTHERHASH/test.js');	
+			});
 			it('strings without a \'/\' will be left unchanged' , function() {
 				var mapped = versionator.createMapped({ '/js/test.js': '/js/HASH/test.js'});
 				mapped.versionPath('Hello this is an odd path').should.eql('Hello this is an odd path');	
@@ -69,6 +74,7 @@ describe('versionator', function() {
 				done();
 			});
 		});
+
 
 	});
 
