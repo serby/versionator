@@ -143,7 +143,7 @@ You can modify the map at runtime, say if during development you want to do a li
     ...
     // modify resource files. put full file path(s) in a list.
     
-    versionator.createMapFromPath(__dirname + '/public', fileList, function(error, modifiedFileMap) {
+    versionator.createMapFromPath(__dirname + '/public', {'fileList': fileList}, function(error, modifiedFileMap) {
         mappedVersion.modifyMap(modifiedFileMap);
     )};
     
