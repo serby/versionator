@@ -17,7 +17,7 @@ task 'delint', 'Runs all modified or added files through jshint', (options) ->
 	exec 'jshint `git status --porcelain | sed -e "s/^...//g"`', execOutput
 
 task 'test', 'Runs all unit tests', (options) ->
-	exec 'node_modules/mocha/bin/mocha -r should -R List ', execOutput
+	exec './node_modules/.bin/mocha -r should -R List ', execOutput
 
 task 'npm-publish', 'Creates a tag based on version number in package.json then pushes and publishes to NPM', (options) ->
 	version = JSON.parse(fs.readFileSync('./package.json')).version
