@@ -6,7 +6,7 @@ versionator was built to solve the problem of static assets getting stuck in bro
 
 Without versionator this is what can happen:
 
-You set your static content to be cached and expire in 30 days time. 
+You set your static content to be cached and expire in 30 days time.
 
      express.static(__dirname + '/public', { maxAge: 2592000000 })
 
@@ -30,7 +30,7 @@ A better solution is to use versionator!
 
 ### Basic Middleware
 
-The simplest way to use versionator is to use the basic middleware which looks for the given 
+The simplest way to use versionator is to use the basic middleware which looks for the given
 version number in a url path and strips it out.
 
 Add versionator into your middleware stack before the static middleware:
@@ -60,7 +60,7 @@ e.g.
 ### HTML
       <script src='/js/v0.1.0/app.js' />
 
-There is also a URL versioning helper that will convert paths for you. 
+There is also a URL versioning helper that will convert paths for you.
 You can expose as a helper like so:
 
 ```js
@@ -103,7 +103,7 @@ An example of how to use versionator with connect and express can be found in th
 You can also use versionator to add a hash, based on the content of the file, to the url path.
 This way the url path will only change if the file has changed.
 
-To do this you must first create a hash for all the files in the public folder. 
+To do this you must first create a hash for all the files in the public folder.
 This can be done as the application starts or read from a file that is created on deployment.
 
 ```js
@@ -142,11 +142,11 @@ You can modify the map at runtime, say if during development you want to do a li
     var mappedVersion = versionator.createMapped(originalFileMap);
     ...
     // modify resource files. put full file path(s) in a list.
-    
+
     versionator.createMapFromPath(__dirname + '/public', fileList, function(error, modifiedFileMap) {
         mappedVersion.modifyMap(modifiedFileMap);
     )};
-    
+
     // send new hashed path to client
     hashedpath = mappedVersion.versionPath(path)
     ...
@@ -154,7 +154,10 @@ You can modify the map at runtime, say if during development you want to do a li
 
 
 ## Credits
+
 [Paul Serby](https://github.com/serby/) follow me on [twitter](http://twitter.com/PabloSerbo)
+
+[Rick Thomas](https://github.com/irickt)
 
 ## Licence
 Licenced under the [New BSD License](http://opensource.org/licenses/bsd-license.php)
