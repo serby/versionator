@@ -10,7 +10,7 @@ describe('versionator', function() {
 	describe('#createMapped', function() {
 
 		it('throws an error if no map is passed', function() {
-			
+
 			(function() {
 				versionator.createMapped();
 			}).should.throw('A hash map of paths is required');
@@ -21,19 +21,29 @@ describe('versionator', function() {
 			versionator.createMapped({}).middleware.should.be.a('function');
 		});
 
-		describe('#versionPath', function() {	
+		describe('#versionPath', function() {
 			it('should inject the mapped url correctly', function() {
 				var mapped = versionator.createMapped({ '/js/test.js': '/js/HASH/test.js'});
-				mapped.versionPath('/js/test.js').should.eql('/js/HASH/test.js');	
+				mapped.versionPath('/js/test.js').should.eql('/js/HASH/test.js');
 			});
 			it('should accept a modified map', function() {
 				var mapped = versionator.createMapped({ '/js/test.js': '/js/HASH/test.js'});
 				mapped.modifyMap({ '/js/test.js': '/js/OTHERHASH/test.js'});
-				mapped.versionPath('/js/test.js').should.eql('/js/OTHERHASH/test.js');	
+				mapped.versionPath('/js/test.js').should.eql('/js/OTHERHASH/test.js');
 			});
 			it('strings without a \'/\' will be left unchanged' , function() {
 				var mapped = versionator.createMapped({ '/js/test.js': '/js/HASH/test.js'});
-				mapped.versionPath('Hello this is an odd path').should.eql('Hello this is an odd path');	
+				mapped.versionPath('Hello this is an odd path').should.eql('Hello this is an odd path');
+			});
+
+			it('should convert all urls in an array', function() {
+				var mapped = versionator.createMapped({ '/js/test.js': '/js/HASH/test.js'});
+				mapped.versionPath(['/js/test.js']).should.eql(['/js/HASH/test.js']);
+			});
+
+			it('should return an empty array when passed an empty url', function() {
+				var basic = versionator.createBasic('v0.0.0');
+				basic.versionPath([]).should.eql([]);
 			});
 		});
 
@@ -81,7 +91,7 @@ describe('versionator', function() {
 			var appObj = startServer({'/images/sprite.png': '/images/VERSIONHASH/sprite.png' });
             var app = appObj.app;
             var mapped = appObj.mapped;
-            
+
             mapped.modifyMap({ '/images/sprite.png': '/images/OTHERHASH/sprite.png' });
 
 			request('http://localhost:9898/images/OTHERHASH/sprite.png', function(error, response, data) {
