@@ -3,7 +3,8 @@ var
 	assert = require('assert'),
 	request = require('request'),
 	versionator = require('../'),
-	appEngine = require('connect');
+	appEngine = require('connect'),
+	http = require('http');
 
 describe('versionator', function() {
 
@@ -51,8 +52,8 @@ describe('versionator', function() {
 
 	describe('mapped middleware', function() {
 
-		function startServer(map) {
-		    var mapped = versionator.createMapped(map)
+		function startServer(map, port) {
+	    var mapped = versionator.createMapped(map);
 			var app = appEngine.createServer(
 				mapped.middleware,
 				function(req, res, next) {
@@ -60,15 +61,17 @@ describe('versionator', function() {
 				}
 			);
 
-			app.listen(9898);
-			return {'app': app, 'mapped': mapped};
+			return {
+				app: http.Server(app).listen(port),
+				mapped: mapped
+			};
 		}
 
 		it('req.url is unchanged if no version match is found', function(done) {
 
-			var app = startServer({}).app;
+			var app = startServer({}, 9900).app;
 
-			request('http://localhost:9898/images/sprite.png', function(error, response, data) {
+			request('http://localhost:9900/images/sprite.png', function(error, response, data) {
 				data.should.eql('/images/sprite.png');
 				app.close();
 				done();
@@ -77,9 +80,9 @@ describe('versionator', function() {
 
 		it('req.url mapped url is mapped correctly', function(done) {
 
-			var app = startServer({'/images/sprite.png': '/images/VERSIONHASH/sprite.png' }).app;
+			var app = startServer({'/images/sprite.png': '/images/VERSIONHASH/sprite.png' }, 9901).app;
 
-			request('http://localhost:9898/images/VERSIONHASH/sprite.png', function(error, response, data) {
+			request('http://localhost:9901/images/VERSIONHASH/sprite.png', function(error, response, data) {
 				data.should.eql('/images/sprite.png');
 				app.close();
 				done();
@@ -88,13 +91,13 @@ describe('versionator', function() {
 
 		it('req.url mapped url is mapped correctly after hash change', function(done) {
 
-			var appObj = startServer({'/images/sprite.png': '/images/VERSIONHASH/sprite.png' });
-            var app = appObj.app;
-            var mapped = appObj.mapped;
+			var appObj = startServer({'/images/sprite.png': '/images/VERSIONHASH/sprite.png' }, 9902);
+      var app = appObj.app;
+      var mapped = appObj.mapped;
 
-            mapped.modifyMap({ '/images/sprite.png': '/images/OTHERHASH/sprite.png' });
+      mapped.modifyMap({ '/images/sprite.png': '/images/OTHERHASH/sprite.png' });
 
-			request('http://localhost:9898/images/OTHERHASH/sprite.png', function(error, response, data) {
+			request('http://localhost:9902/images/OTHERHASH/sprite.png', function(error, response, data) {
 				data.should.eql('/images/sprite.png');
 				app.close();
 				done();
