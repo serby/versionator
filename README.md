@@ -42,7 +42,7 @@ var versionator = require('versionator').create(app.version);
 
 app.configure(function() {
 
-  app.use(versionator.middleware(app.version))
+  app.use(versionator.middleware)
   ....
   .use(express.static(__dirname + '/public', { maxAge: 2592000000 }));
 
