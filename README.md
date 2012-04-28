@@ -38,11 +38,11 @@ Add versionator into your middleware stack before the static middleware:
 ```js
 
 app.version = '0.1.0';
-var basic = require('versionator').createBasic(app.version);
+var versionator = require('versionator').create(app.version);
 
 app.configure(function() {
 
-  app.use(basic.middleware('v' + app.version))
+  app.use(versionator.middleware)
   ....
   .use(express.static(__dirname + '/public', { maxAge: 2592000000 }));
 
@@ -69,7 +69,7 @@ app.configure(function() {
 
   // This exposes the helper to the views
   app.helpers({
-    versionPath: basic.versionPath
+    versionPath: versionator.versionPath
   });
 
 });

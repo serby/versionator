@@ -11,7 +11,7 @@ function createFiles(dirPath, files, callback) {
 	var fns = [
 		async.apply(mkdirp, dirPath + '/sub')
 	];
-	
+
 	Object.keys(files).forEach(function(filename) {
 		fns.push(async.apply(fs.writeFile, dirPath + '/' + filename, files[filename]));
 	});
@@ -21,7 +21,7 @@ function createFiles(dirPath, files, callback) {
 
 function removeFiles(dirPath, files, callback) {
 	var fns = [];
-	
+
 	Object.keys(files).forEach(function(filename) {
 		fns.push(async.apply(fs.unlink, dirPath + '/' + filename));
 	});
@@ -61,9 +61,9 @@ describe('versionator', function() {
 		it('should correctly walk directory and create hashes', function(done) {
 
 			versionator.createMapFromPath(tmpPath, function(error, results) {
-				
+
 				var a = {
-					'/a': '/d41d8cd98f00b204e9800998ecf8427e/a', 
+					'/a': '/d41d8cd98f00b204e9800998ecf8427e/a',
 					'/b': '/8b1a9953c4611296a827abf8c47804d7/b',
 					'/c': '/e509465ef513154988e088d6ad3c21bf/c',
 					'/sub/a': '/sub/49f68a5c8493ec2c0bf489821c21fc3b/a' }.should.eql(results);
@@ -74,12 +74,12 @@ describe('versionator', function() {
 		});
 
 		it('should accept fileList and create hashes', function(done) {
-                var fileList = [
-                  tmpPath + '/c',
-                  tmpPath + '/sub/a'
-                ]
+      var fileList = [
+        tmpPath + '/c',
+        tmpPath + '/sub/a'
+      ];
 			versionator.createMapFromPath(tmpPath, {'fileList': fileList}, function(error, results) {
-				
+
 				var a = {
 					'/c': '/e509465ef513154988e088d6ad3c21bf/c',
 					'/sub/a': '/sub/49f68a5c8493ec2c0bf489821c21fc3b/a' }.should.eql(results);
