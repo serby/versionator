@@ -3,7 +3,8 @@ var
 	assert = require('assert'),
 	request = require('request'),
 	versionator = require('../'),
-	appEngine = require('connect');
+	appEngine = require('connect'),
+	http = require('http');
 
 describe('versionator', function() {
 
@@ -46,7 +47,7 @@ describe('versionator', function() {
 
 	describe('basic middleware', function() {
 
-		function startServer() {
+		function startServer(port) {
 			var app = appEngine.createServer(
 				versionator.createBasic('v0.1.2').middleware,
 				function(req, res, next) {
@@ -54,13 +55,12 @@ describe('versionator', function() {
 				}
 			);
 
-			app.listen(9898);
-			return app;
+			return http.Server(app).listen(port);
 		}
 
 		it('req.url has version removed from pathname', function(done) {
 
-			var app = startServer();
+			var app = startServer(9898);
 
 			request('http://localhost:9898/images/v0.1.2/sprite.png', function(error, response, data) {
 				data.should.eql('/images/sprite.png');
@@ -71,9 +71,9 @@ describe('versionator', function() {
 
 		it('req.url is unchanged if no version match is found', function(done) {
 
-			var app = startServer();
+			var app = startServer(9899);
 
-			request('http://localhost:9898/images/sprite.png', function(error, response, data) {
+			request('http://localhost:9899/images/sprite.png', function(error, response, data) {
 				data.should.eql('/images/sprite.png');
 				app.close();
 				done();
