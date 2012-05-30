@@ -53,7 +53,7 @@ describe('versionator', function() {
 	describe('mapped middleware', function() {
 
 		function startServer(map, port) {
-	    var mapped = versionator.createMapped(map);
+			var mapped = versionator.createMapped(map);
 			var app = appEngine.createServer(
 				mapped.middleware,
 				function(req, res, next) {
@@ -62,7 +62,7 @@ describe('versionator', function() {
 			);
 
 			return {
-				app: http.Server(app).listen(port),
+				app: app.listen(port),
 				mapped: mapped
 			};
 		}

@@ -55,7 +55,7 @@ describe('versionator', function() {
 				}
 			);
 
-			return http.Server(app).listen(port);
+			return app.listen(port);
 		}
 
 		it('req.url has version removed from pathname', function(done) {
