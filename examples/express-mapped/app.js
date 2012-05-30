@@ -33,18 +33,18 @@ versionator.createMapFromPath(__dirname + '/public', function(error, staticFileM
       .use(express.bodyParser())
       .use(express.methodOverride())
       .use(mappedVersion.middleware)
-      .use(stylus.middleware({ 
+      .use(stylus.middleware({
         src: __dirname + '/public/',
         compile: stylusCompile }))
       .use(app.router)
       .use(express.static(__dirname + '/public', { maxAge: 2592000000 }));
   });
 
-  
+
 
 
   app.configure('development', function(){
-    app.use(express.errorHandler({ dumpExceptions: true, showStack: true })); 
+    app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
   });
 
   // Routes

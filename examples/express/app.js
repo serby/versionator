@@ -1,8 +1,8 @@
-var
-  express = require('express'),
-  stylus = require('stylus'),
-  versionator = require('../../'),
-  app = module.exports = express.createServer();
+var express = require('express')
+  , stylus = require('stylus')
+  , versionator = require('../../')
+  , app = module.exports = express.createServer()
+  ;
 
 app.version = '0.1';
 
@@ -32,7 +32,7 @@ app.configure(function(){
     .use(express.bodyParser())
     .use(express.methodOverride())
     .use(basic.middleware)
-    .use(stylus.middleware({ 
+    .use(stylus.middleware({
       src: __dirname + '/public/',
       compile: stylusCompile }))
     .use(app.router)
@@ -40,7 +40,7 @@ app.configure(function(){
 });
 
 app.configure('development', function(){
-  app.use(express.errorHandler({ dumpExceptions: true, showStack: true })); 
+  app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
 });
 
 // Routes
