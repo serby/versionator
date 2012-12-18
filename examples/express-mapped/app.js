@@ -23,7 +23,7 @@ versionator.createMapFromPath(__dirname + '/public', function(error, staticFileM
 
   // Configuration
   app.configure(function(){
-    app.helpers({
+    app.locals({
       versionPath: mappedVersion.versionPath
     });
 

@@ -11,7 +11,7 @@ app.configure(function(){
 
   var basic = versionator.createBasic('v' + app.version);
 
-  app.helpers({
+  app.locals({
     versionPath: basic.versionPath
   });
 

@@ -60,15 +60,15 @@ e.g.
 ### HTML
       <script src='/js/v0.1.0/app.js' />
 
-There is also a URL versioning helper that will convert paths for you.
+There is also a URL versioning local variable that will convert paths for you.
 You can expose as a helper like so:
 
 ```js
 
 app.configure(function() {
 
-  // This exposes the helper to the views
-  app.helpers({
+  // This exposes the local variable to the views
+  app.locals({
     versionPath: versionator.versionPath
   });
 
@@ -114,8 +114,8 @@ versionator.createMapFromPath(__dirname + '/public', function(error, staticFileM
 
   app.configure(function(){
 
-    // This exposes the helper to the views
-    app.helpers({
+    // This exposes the local variable to the views
+    app.locals({
       versionPath: mappedVersion.versionPath
     });
 
