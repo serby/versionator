@@ -78,7 +78,7 @@ describe('versionator', function() {
         tmpPath + '/c',
         tmpPath + '/sub/a'
       ];
-      versionator.createMapFromPath(tmpPath, {'fileList': fileList}, function(error, results) {
+      versionator.createMapFromPath(tmpPath, { fileList: fileList}, function(error, results) {
 
         var a = {
           '/c': '/e509465ef513154988e088d6ad3c21bf/c',
