@@ -44,9 +44,7 @@ describe('versionator', function() {
     };
 
   before(function(done) {
-    createFiles(tmpPath, files, function() {
-      done();
-    });
+    createFiles(tmpPath, files, done);
   });
 
   describe('map path validation', function() {
@@ -86,6 +84,27 @@ describe('versionator', function() {
 
         done();
       });
+
+    });
+
+    describe('with a symlink', function(done) {
+        beforeEach(function(done) {
+            fs.symlink(tmpPath + '/b', tmpPath + '/b_symlink', 'file', done);
+        });
+
+        it('create hash for symlink', function(done) {
+            versionator.createMapFromPath(tmpPath, function(error, results) {
+
+                results['/b_symlink'].should.equal('/8b1a9953c4611296a827abf8c47804d7/b_symlink');
+
+                done()
+            });
+
+        });
+
+        afterEach(function(done) {
+            fs.unlink(tmpPath + '/b_symlink', done);
+        });
 
     });
 
