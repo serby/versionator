@@ -22,7 +22,7 @@ app.configure(function(){
       .set('warn', true)
       .set('compress', true)
       .define('versionPath', function(urlPath) {
-        return 'url(' + basic.versionPath(urlPath) + ')';
+        return new stylus.nodes.Literal('url(' + basic.versionPath(urlPath) + ')');
       });
   }
 

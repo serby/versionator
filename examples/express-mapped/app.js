@@ -17,7 +17,7 @@ versionator.createMapFromPath(__dirname + '/public', function(error, staticFileM
       .set('warn', true)
       .set('compress', true)
       .define('versionPath', function(urlPath) {
-        return 'url(' + mappedVersion.versionPath(urlPath) + ')';
+        return new stylus.nodes.Literal('url(' + mappedVersion.versionPath(urlPath) + ')');
       });
   }
 
