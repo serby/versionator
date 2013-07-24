@@ -89,6 +89,22 @@ describe('versionator', function() {
 
     });
 
+    it('should work with a trailing slash', function(done) {
+      var fileList = [
+        tmpPath + '/c',
+        tmpPath + '/sub/a'
+      ];
+      versionator.createMapFromPath(tmpPath + '/', { fileList: fileList}, function(error, results) {
+
+        var a = {
+          '/c': '/e509465ef513154988e088d6ad3c21bf/c',
+          '/sub/a': '/sub/49f68a5c8493ec2c0bf489821c21fc3b/a' }.should.eql(results);
+
+        done();
+      });
+
+    });
+
   });
 
   after(function(done) {
