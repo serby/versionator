@@ -1,14 +1,13 @@
-var
-  express = require('express'),
+var express = require('express'),
   stylus = require('stylus'),
   versionator = require('../../'),
-  app = module.exports = express.createServer();
+  app = module.exports = express.createServer()
 
-app.version = '0.1';
+app.version = '0.1'
 
 versionator.createMapFromPath(__dirname + '/public', function(error, staticFileMap) {
 
-  var mappedVersion = versionator.createMapped(staticFileMap);
+  var mappedVersion = versionator.createMapped(staticFileMap)
 
   // Define a custom compile so versionPath can be got from inside the .styl
   function stylusCompile(str, path) {
@@ -17,15 +16,15 @@ versionator.createMapFromPath(__dirname + '/public', function(error, staticFileM
       .set('warn', true)
       .set('compress', true)
       .define('versionPath', function(urlPath) {
-        return new stylus.nodes.Literal('url(' + mappedVersion.versionPath(urlPath) + ')');
-      });
+        return new stylus.nodes.Literal('url(' + mappedVersion.versionPath(urlPath) + ')')
+      })
   }
 
   // Configuration
   app.configure(function(){
     app.locals({
       versionPath: mappedVersion.versionPath
-    });
+    })
 
     app
       .set('views', __dirname + '/views')
@@ -35,17 +34,15 @@ versionator.createMapFromPath(__dirname + '/public', function(error, staticFileM
       .use(mappedVersion.middleware)
       .use(stylus.middleware({
         src: __dirname + '/public/',
-        compile: stylusCompile }))
+        compile: stylusCompile
+      }))
       .use(app.router)
-      .use(express.static(__dirname + '/public', { maxAge: 2592000000 }));
-  });
-
-
-
+      .use(express.static(__dirname + '/public', { maxAge: 2592000000 }))
+  })
 
   app.configure('development', function(){
-    app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
-  });
+    app.use(express.errorHandler({ dumpExceptions: true, showStack: true }))
+  })
 
   // Routes
 
@@ -53,10 +50,9 @@ versionator.createMapFromPath(__dirname + '/public', function(error, staticFileM
     res.render('index', {
       layout: false,
       title: 'Versionator'
-    });
-  });
+    })
+  })
 
-  app.listen(3000);
-  console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
-
-});
+  app.listen(3000)
+  console.log('Express server listening on port %d in %s mode', app.address().port, app.settings.env)
+})

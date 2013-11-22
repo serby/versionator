@@ -1,1 +1,1 @@
-alert('Example script loaded');
+alert('Example script loaded')

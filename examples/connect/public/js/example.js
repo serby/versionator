@@ -1,1 +1,1 @@
-alert(document.location);
+alert(document.location)
