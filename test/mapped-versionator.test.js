@@ -17,7 +17,7 @@ describe('versionator', function() {
     })
 
     it('returns a middleware function', function() {
-      versionator.createMapped({}).middleware.should.be.a('function')
+      versionator.createMapped({}).middleware.should.be.type('function')
     })
 
     describe('#versionPath', function() {
