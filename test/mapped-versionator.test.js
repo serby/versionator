@@ -25,6 +25,21 @@ describe('versionator', function() {
         var mapped = versionator.createMapped({ '/js/test.js': '/js/HASH/test.js'})
         mapped.versionPath('/js/test.js').should.eql('/js/HASH/test.js')
       })
+
+      it('should mapped urls with numbers', function() {
+        var mapped = versionator.createMapped(
+          { '/js/1test.js': '/js/HASH/1test.js'
+          , '/js/a-1test.js': '/js/HASH/a-1test.js'
+          })
+        mapped.versionPath('/js/1test.js').should.eql('/js/HASH/1test.js')
+        mapped.versionPath('/js/a-1test.js').should.eql('/js/HASH/a-1test.js')
+      })
+
+      it('should mapped urls with hyphens', function() {
+        var mapped = versionator.createMapped({ '/js/test-bar.js': '/js/HASH/test-bar.js'})
+        mapped.versionPath('/js/test-bar.js').should.eql('/js/HASH/test-bar.js')
+      })
+
       it('should accept a modified map', function() {
         var mapped = versionator.createMapped({ '/js/test.js': '/js/HASH/test.js'})
         mapped.modifyMap({ '/js/test.js': '/js/OTHERHASH/test.js'})
