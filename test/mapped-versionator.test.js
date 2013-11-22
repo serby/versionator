@@ -36,8 +36,10 @@ describe('versionator', function() {
       })
 
       it('should convert all urls in an array', function() {
-        var mapped = versionator.createMapped({ '/js/test.js': '/js/HASH/test.js'})
-        mapped.versionPath(['/js/test.js']).should.eql(['/js/HASH/test.js'])
+        var mapped = versionator.createMapped(
+          { '/js/test.js': '/js/HASH/test.js'
+          , '/js/foo/test.js': '/js/foo/HASH/test.js'})
+        mapped.versionPath(['/js/test.js', '/js/foo/test.js']).should.eql(['/js/HASH/test.js', '/js/foo/HASH/test.js'])
       })
 
       it('should return an empty array when passed an empty url', function() {
