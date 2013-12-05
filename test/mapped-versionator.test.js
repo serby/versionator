@@ -72,6 +72,7 @@ describe('versionator', function() {
       var app = appEngine.createServer(
         mapped.middleware,
         function(req, res) {
+          res.setHeader('x-url', req.url)
           res.end(req.url)
         }
       )
@@ -88,6 +89,28 @@ describe('versionator', function() {
 
       request('http://localhost:9900/images/sprite.png', function(error, response, data) {
         data.should.eql('/images/sprite.png')
+        app.close()
+        done()
+      })
+    })
+
+    it('should allow GET', function(done) {
+
+      var app = startServer({'/images/sprite.png': '/images/VERSIONHASH/sprite.png' }, 9901).app
+
+      request.get('http://localhost:9901/images/VERSIONHASH/sprite.png', function(error, response, data) {
+        data.should.eql('/images/sprite.png')
+        app.close()
+        done()
+      })
+    })
+
+    it('should allow HEAD', function(done) {
+
+      var app = startServer({'/images/sprite.png': '/images/VERSIONHASH/sprite.png' }, 9901).app
+
+      request.head('http://localhost:9901/images/VERSIONHASH/sprite.png', function(error, response) {
+        response.headers['x-url'].should.eql('/images/sprite.png')
         app.close()
         done()
       })
