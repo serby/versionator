@@ -7,6 +7,9 @@
     "type": "git",
     "url": "git@github.com:serby/versionator.git"
   },
+  "publishConfig": {
+    "registry": "http://registry.npmjs.org"
+  },
   "main": "index.js",
   "scripts": {
     "lint": "./node_modules/.bin/jshint . --reporter=./node_modules/jshint-full-path/index.js",
