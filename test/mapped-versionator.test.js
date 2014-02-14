@@ -126,6 +126,17 @@ describe('versionator', function() {
         done()
       })
     })
+    
+    it('req.url mapped url (with query string) is mapped correctly', function(done) {
+
+      var app = startServer({'/images/sprite.png': '/images/VERSIONHASH/sprite.png' }, 9901).app
+
+      request('http://localhost:9901/images/VERSIONHASH/sprite.png?key=val', function(error, response, data) {
+        data.should.eql('/images/sprite.png?key=val')
+        app.close()
+        done()
+      })
+    })
 
     it('req.url mapped url is mapped correctly after hash change', function(done) {
 
