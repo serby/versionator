@@ -2,7 +2,7 @@
   "author": "Paul Serby <paul@serby.net>",
   "name": "versionator",
   "description": "Static content versioning middleware for connect and express.",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "repository": {
     "type": "git",
     "url": "git@github.com:serby/versionator.git"
