@@ -4,7 +4,6 @@ var appEngine
   , versionator = require('../')
   , appEngine = require('connect')
 
-
 describe('versionator', function() {
 
   describe('#createBasic', function() {
@@ -25,7 +24,6 @@ describe('versionator', function() {
         var basic = versionator.createBasic('v0.0.0')
         basic.versionPath('/js/test.js').should.eql('/js/v0.0.0/test.js')
       })
-
 
       it('should URLs with querystring', function() {
         var basic = versionator.createBasic('v0.0.0')
@@ -49,7 +47,7 @@ describe('versionator', function() {
 
       it('should convert all urls in an array', function() {
         var basic = versionator.createBasic('v0.0.0')
-        basic.versionPath(['/js/test.js']).should.eql(['/js/v0.0.0/test.js'])
+        basic.versionPath([ '/js/test.js' ]).should.eql([ '/js/v0.0.0/test.js' ])
       })
 
       it('should return an empty array when passed an empty url', function() {
@@ -60,17 +58,15 @@ describe('versionator', function() {
 
   })
 
-
-
   describe('basic middleware', function() {
 
     function startServer(port) {
       var app = appEngine.createServer(
-        versionator.createBasic('v0.1.2').middleware,
-        function(req, res) {
-          res.setHeader('x-url', req.url)
-          res.end(req.url)
-        }
+        versionator.createBasic('v0.1.2').middleware
+        , function(req, res) {
+            res.setHeader('x-url', req.url)
+            res.end(req.url)
+          }
       )
 
       return app.listen(port)

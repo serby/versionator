@@ -21,7 +21,7 @@ describe('versionator', function() {
 
     describe('#versionPath', function() {
       it('should inject the mapped url correctly', function() {
-        var mapped = versionator.createMapped({ '/js/test.js': '/js/HASH/test.js'})
+        var mapped = versionator.createMapped({ '/js/test.js': '/js/HASH/test.js' })
         mapped.versionPath('/js/test.js').should.eql('/js/HASH/test.js')
       })
 
@@ -35,40 +35,41 @@ describe('versionator', function() {
       })
 
       it('should mapped URLs with hyphens', function() {
-        var mapped = versionator.createMapped({ '/js/test-bar.js': '/js/HASH/test-bar.js'})
+        var mapped = versionator.createMapped({ '/js/test-bar.js': '/js/HASH/test-bar.js' })
         mapped.versionPath('/js/test-bar.js').should.eql('/js/HASH/test-bar.js')
       })
 
       it('should mapped URLs with querystring', function() {
-        var mapped = versionator.createMapped({ '/js/test-bar.js': '/js/HASH/test-bar.js'})
+        var mapped = versionator.createMapped({ '/js/test-bar.js': '/js/HASH/test-bar.js' })
         mapped.versionPath('/js/test-bar.js?test=1').should.eql('/js/HASH/test-bar.js?test=1')
       })
 
       it('should mapped URLs with hash', function() {
-        var mapped = versionator.createMapped({ '/js/test-bar.js': '/js/HASH/test-bar.js'})
+        var mapped = versionator.createMapped({ '/js/test-bar.js': '/js/HASH/test-bar.js' })
         mapped.versionPath('/js/test-bar.js#hashy').should.eql('/js/HASH/test-bar.js#hashy')
       })
 
       it('should mapped URLs with querystring and hash', function() {
-        var mapped = versionator.createMapped({ '/js/test-bar.js': '/js/HASH/test-bar.js'})
+        var mapped = versionator.createMapped({ '/js/test-bar.js': '/js/HASH/test-bar.js' })
         mapped.versionPath('/js/test-bar.js?test=1#hashy').should.eql('/js/HASH/test-bar.js?test=1#hashy')
       })
 
       it('should accept a modified map', function() {
-        var mapped = versionator.createMapped({ '/js/test.js': '/js/HASH/test.js'})
-        mapped.modifyMap({ '/js/test.js': '/js/OTHERHASH/test.js'})
+        var mapped = versionator.createMapped({ '/js/test.js': '/js/HASH/test.js' })
+        mapped.modifyMap({ '/js/test.js': '/js/OTHERHASH/test.js' })
         mapped.versionPath('/js/test.js').should.eql('/js/OTHERHASH/test.js')
       })
       it('strings without a \'/\' will be left unchanged' , function() {
-        var mapped = versionator.createMapped({ '/js/test.js': '/js/HASH/test.js'})
+        var mapped = versionator.createMapped({ '/js/test.js': '/js/HASH/test.js' })
         mapped.versionPath('Hello this is an odd path').should.eql('Hello this is an odd path')
       })
 
       it('should convert all URLs in an array', function() {
         var mapped = versionator.createMapped(
           { '/js/test.js': '/js/HASH/test.js'
-          , '/js/foo/test.js': '/js/foo/HASH/test.js'})
-        mapped.versionPath(['/js/test.js', '/js/foo/test.js']).should.eql(['/js/HASH/test.js', '/js/foo/HASH/test.js'])
+          , '/js/foo/test.js': '/js/foo/HASH/test.js' })
+        mapped.versionPath([ '/js/test.js', '/js/foo/test.js' ])
+          .should.eql([ '/js/HASH/test.js', '/js/foo/HASH/test.js' ])
       })
 
       it('should return an empty array when passed an empty url', function() {
@@ -83,18 +84,17 @@ describe('versionator', function() {
 
     function startServer(map, port) {
       var mapped = versionator.createMapped(map)
-      var app = appEngine.createServer(
-        mapped.middleware,
-        function(req, res) {
-          res.setHeader('x-url', req.url)
-          res.end(req.url)
-        }
-      )
+        , app = appEngine.createServer(mapped.middleware
+          , function(req, res) {
+              res.setHeader('x-url', req.url)
+              res.end(req.url)
+            }
+          )
 
-      return {
-        app: app.listen(port),
-        mapped: mapped
-      }
+      return (
+        { app: app.listen(port)
+        , mapped: mapped
+        })
     }
 
     it('req.url is unchanged if no version match is found', function(done) {
@@ -110,7 +110,7 @@ describe('versionator', function() {
 
     it('should allow GET', function(done) {
 
-      var app = startServer({'/images/sprite.png': '/images/VERSIONHASH/sprite.png' }, 9901).app
+      var app = startServer({ '/images/sprite.png': '/images/VERSIONHASH/sprite.png' }, 9901).app
 
       request.get('http://localhost:9901/images/VERSIONHASH/sprite.png', function(error, response, data) {
         data.should.eql('/images/sprite.png')
@@ -121,7 +121,7 @@ describe('versionator', function() {
 
     it('should allow HEAD', function(done) {
 
-      var app = startServer({'/images/sprite.png': '/images/VERSIONHASH/sprite.png' }, 9901).app
+      var app = startServer({ '/images/sprite.png': '/images/VERSIONHASH/sprite.png' }, 9901).app
 
       request.head('http://localhost:9901/images/VERSIONHASH/sprite.png', function(error, response) {
         response.headers['x-url'].should.eql('/images/sprite.png')
@@ -132,7 +132,7 @@ describe('versionator', function() {
 
     it('should not map POST', function(done) {
 
-      var app = startServer({'/images/sprite.png': '/images/VERSIONHASH/sprite.png' }, 9901).app
+      var app = startServer({ '/images/sprite.png': '/images/VERSIONHASH/sprite.png' }, 9901).app
 
       request.post('http://localhost:9901/images/VERSIONHASH/sprite.png', function(error, response) {
         response.headers['x-url'].should.eql('/images/VERSIONHASH/sprite.png')
@@ -143,7 +143,7 @@ describe('versionator', function() {
 
     it('req.url mapped url is mapped correctly', function(done) {
 
-      var app = startServer({'/images/sprite.png': '/images/VERSIONHASH/sprite.png' }, 9901).app
+      var app = startServer({ '/images/sprite.png': '/images/VERSIONHASH/sprite.png' }, 9901).app
 
       request('http://localhost:9901/images/VERSIONHASH/sprite.png', function(error, response, data) {
         data.should.eql('/images/sprite.png')
@@ -154,7 +154,7 @@ describe('versionator', function() {
 
     it('req.url mapped url (with query string) is mapped correctly', function(done) {
 
-      var app = startServer({'/images/sprite.png': '/images/VERSIONHASH/sprite.png' }, 9901).app
+      var app = startServer({ '/images/sprite.png': '/images/VERSIONHASH/sprite.png' }, 9901).app
 
       request('http://localhost:9901/images/VERSIONHASH/sprite.png?key=val', function(error, response, data) {
         data.should.eql('/images/sprite.png?key=val')
@@ -163,10 +163,9 @@ describe('versionator', function() {
       })
     })
 
-
     it('req.url mapped url with query string and #hash is mapped correctly', function(done) {
 
-      var app = startServer({'/images/sprite.png': '/images/VERSIONHASH/sprite.png' }, 9901).app
+      var app = startServer({ '/images/sprite.png': '/images/VERSIONHASH/sprite.png' }, 9901).app
 
       request('http://localhost:9901/images/VERSIONHASH/sprite.png?key=val#hashy', function(error, response, data) {
         // #hash isn't sent to the server, so you shouldn't see it.
@@ -178,9 +177,9 @@ describe('versionator', function() {
 
     it('req.url mapped url is mapped correctly after hash change', function(done) {
 
-      var appObj = startServer({'/images/sprite.png': '/images/VERSIONHASH/sprite.png' }, 9902)
-      var app = appObj.app
-      var mapped = appObj.mapped
+      var appObj = startServer({ '/images/sprite.png': '/images/VERSIONHASH/sprite.png' }, 9902)
+        , app = appObj.app
+        , mapped = appObj.mapped
 
       mapped.modifyMap({ '/images/sprite.png': '/images/OTHERHASH/sprite.png' })
 

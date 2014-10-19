@@ -31,13 +31,13 @@ function removeFiles(dirPath, files, callback) {
 describe('versionator', function() {
 
   var
-    tmpPath = '/tmp/versionator-test',
-    files = {
-      'a': '',
-      'b': 'Hello',
-      'c': 'World!',
-      'sub/a': 'hi'
-    }
+    tmpPath = '/tmp/versionator-test'
+    , files =
+      { 'a': ''
+      , 'b': 'Hello'
+      , 'c': 'World!'
+      , 'sub/a': 'hi'
+      }
 
   before(function(done) {
     createFiles(tmpPath, files, done)
@@ -56,12 +56,12 @@ describe('versionator', function() {
 
       versionator.createMapFromPath(tmpPath, function(error, results) {
 
-        var a = {
-          '/a': '/d41d8cd98f00b204e9800998ecf8427e/a',
-          '/b': '/8b1a9953c4611296a827abf8c47804d7/b',
-          '/c': '/e509465ef513154988e088d6ad3c21bf/c',
-          '/sub/a': '/sub/49f68a5c8493ec2c0bf489821c21fc3b/a'
-        }
+        var a =
+          { '/a': '/d41d8cd98f00b204e9800998ecf8427e/a'
+          , '/b': '/8b1a9953c4611296a827abf8c47804d7/b'
+          , '/c': '/e509465ef513154988e088d6ad3c21bf/c'
+          , '/sub/a': '/sub/49f68a5c8493ec2c0bf489821c21fc3b/a'
+          }
 
         a.should.eql(results)
 
@@ -71,16 +71,16 @@ describe('versionator', function() {
     })
 
     it('should accept fileList and create hashes', function(done) {
-      var fileList = [
-        tmpPath + '/c',
-        tmpPath + '/sub/a'
-      ]
-      versionator.createMapFromPath(tmpPath, { fileList: fileList}, function(error, results) {
+      var fileList =
+        [ tmpPath + '/c'
+        , tmpPath + '/sub/a'
+        ]
+      versionator.createMapFromPath(tmpPath, { fileList: fileList }, function(error, results) {
 
-        var a = {
-          '/c': '/e509465ef513154988e088d6ad3c21bf/c',
-          '/sub/a': '/sub/49f68a5c8493ec2c0bf489821c21fc3b/a'
-        }
+        var a =
+          { '/c': '/e509465ef513154988e088d6ad3c21bf/c'
+          , '/sub/a': '/sub/49f68a5c8493ec2c0bf489821c21fc3b/a'
+          }
         a.should.eql(results)
         done()
       })
@@ -112,12 +112,12 @@ describe('versionator', function() {
 
       versionator.createMapFromPath(tmpPath + '/a/..', function(error, results) {
 
-        var a = {
-          '/a': '/d41d8cd98f00b204e9800998ecf8427e/a',
-          '/b': '/8b1a9953c4611296a827abf8c47804d7/b',
-          '/c': '/e509465ef513154988e088d6ad3c21bf/c',
-          '/sub/a': '/sub/49f68a5c8493ec2c0bf489821c21fc3b/a'
-        }
+        var a =
+          { '/a': '/d41d8cd98f00b204e9800998ecf8427e/a'
+          , '/b': '/8b1a9953c4611296a827abf8c47804d7/b'
+          , '/c': '/e509465ef513154988e088d6ad3c21bf/c'
+          , '/sub/a': '/sub/49f68a5c8493ec2c0bf489821c21fc3b/a'
+          }
 
         a.should.eql(results)
 
@@ -126,7 +126,6 @@ describe('versionator', function() {
       })
 
     })
-
 
   })
 
