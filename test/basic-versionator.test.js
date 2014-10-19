@@ -20,10 +20,28 @@ describe('versionator', function() {
     })
 
     describe('#versionPath', function() {
+
       it('should inject the version correctly', function() {
         var basic = versionator.createBasic('v0.0.0')
         basic.versionPath('/js/test.js').should.eql('/js/v0.0.0/test.js')
       })
+
+
+      it('should URLs with querystring', function() {
+        var basic = versionator.createBasic('v0.0.0')
+        basic.versionPath('/js/test-bar.js?test=1').should.eql('/js/v0.0.0/test-bar.js?test=1')
+      })
+
+      it('should basic URLs with hash', function() {
+        var basic = versionator.createBasic('v0.0.0')
+        basic.versionPath('/js/test-bar.js#hashy').should.eql('/js/v0.0.0/test-bar.js#hashy')
+      })
+
+      it('should basic URLs with querystring and hash', function() {
+        var basic = versionator.createBasic('v0.0.0')
+        basic.versionPath('/js/test-bar.js?test=1#hashy').should.eql('/js/v0.0.0/test-bar.js?test=1#hashy')
+      })
+
       it('strings without a \'/\' will be left unchanged' , function() {
         var basic = versionator.createBasic('v0.0.0')
         basic.versionPath('Hello this is an odd path').should.eql('Hello this is an odd path')
