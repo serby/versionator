@@ -3,7 +3,6 @@ var appEngine
   , versionator = require('../')
   , appEngine = require('connect')
 
-
 describe('versionator', function() {
 
   describe('#createMapped', function() {
