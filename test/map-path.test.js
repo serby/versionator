@@ -12,10 +12,10 @@ function createFiles(dirPath, files, dirs, callback) {
     fns.push(async.apply(fs.writeFile, dirPath + '/' + filename, files[filename]))
   })
   Object.keys(files).forEach(function(filename) {
-    fns.push(async.apply(fs.symlink, dirPath + '/' + filename, dirPath + '/' + filename + '_link'))
+    fns.push(async.apply(fs.symlink, dirPath + '/' + filename, dirPath + '/' + filename + '_lnk'))
   });
   dirs.forEach(function(dir) {
-    fns.push(async.apply(fs.symlink, dirPath + '/' + dir, dirPath + '/' + dir + '_link'))
+    fns.push(async.apply(fs.symlink, dirPath + '/' + dir, dirPath + '/' + dir + '_lnk'))
   });
   async.series(fns, callback)
 }
@@ -27,10 +27,10 @@ function removeFiles(dirPath, files, dirs, callback) {
     fns.push(async.apply(fs.unlink, dirPath + '/' + filename))
   })
   Object.keys(files).forEach(function(filename) {
-    fns.push(async.apply(fs.unlink, dirPath + '/' + filename + '_link'))
+    fns.push(async.apply(fs.unlink, dirPath + '/' + filename + '_lnk'))
   })
   dirs.forEach(function(dir) {
-    fns.push(async.apply(fs.unlink, dirPath + '/' + dir + '_link'))
+    fns.push(async.apply(fs.unlink, dirPath + '/' + dir + '_lnk'))
   });
 
   fns.push(async.apply(fs.rmdir, dirPath + '/sub'))
@@ -69,13 +69,31 @@ describe('versionator', function() {
 
         var a =
           { '/a': '/d41d8cd98f00b204e9800998ecf8427e/a'
-          , '/a_link': '/d41d8cd98f00b204e9800998ecf8427e/a_link'
+          , '/a_lnk': '/d41d8cd98f00b204e9800998ecf8427e/a_lnk'
           , '/b': '/8b1a9953c4611296a827abf8c47804d7/b'
-          , '/b_link': '/8b1a9953c4611296a827abf8c47804d7/b_link'
+          , '/b_lnk': '/8b1a9953c4611296a827abf8c47804d7/b_lnk'
           , '/c': '/e509465ef513154988e088d6ad3c21bf/c'
-          , '/c_link': '/e509465ef513154988e088d6ad3c21bf/c_link'
+          , '/c_lnk': '/e509465ef513154988e088d6ad3c21bf/c_lnk'
           , '/sub/a': '/sub/49f68a5c8493ec2c0bf489821c21fc3b/a'
-          , '/sub/a_link': '/sub/49f68a5c8493ec2c0bf489821c21fc3b/a_link'
+          , '/sub/a_lnk': '/sub/49f68a5c8493ec2c0bf489821c21fc3b/a_lnk'
+          , '/sub_lnk/a': '/sub_lnk/49f68a5c8493ec2c0bf489821c21fc3b/a'
+          , '/sub_lnk/a_lnk': '/sub_lnk/49f68a5c8493ec2c0bf489821c21fc3b/a_lnk'
+          }
+        a.should.eql(results)
+
+        done()
+      })
+
+    })
+
+    it('should not follow symlinks if specified', function(done) {
+      versionator.createMapFromPath(tmpPath, { followLinks: false }, function(error, results) {
+
+        var a =
+          { '/a': '/d41d8cd98f00b204e9800998ecf8427e/a'
+          , '/b': '/8b1a9953c4611296a827abf8c47804d7/b'
+          , '/c': '/e509465ef513154988e088d6ad3c21bf/c'
+          , '/sub/a': '/sub/49f68a5c8493ec2c0bf489821c21fc3b/a'
           }
         a.should.eql(results)
 
@@ -111,13 +129,15 @@ describe('versionator', function() {
 
         var a =
           { '/a': '/d41d8cd98f00b204e9800998ecf8427e/a'
-          , '/a_link': '/d41d8cd98f00b204e9800998ecf8427e/a_link'
+          , '/a_lnk': '/d41d8cd98f00b204e9800998ecf8427e/a_lnk'
           , '/b': '/8b1a9953c4611296a827abf8c47804d7/b'
-          , '/b_link': '/8b1a9953c4611296a827abf8c47804d7/b_link'
+          , '/b_lnk': '/8b1a9953c4611296a827abf8c47804d7/b_lnk'
           , '/c': '/e509465ef513154988e088d6ad3c21bf/c'
-          , '/c_link': '/e509465ef513154988e088d6ad3c21bf/c_link'
+          , '/c_lnk': '/e509465ef513154988e088d6ad3c21bf/c_lnk'
           , '/sub/a': '/sub/49f68a5c8493ec2c0bf489821c21fc3b/a'
-          , '/sub/a_link': '/sub/49f68a5c8493ec2c0bf489821c21fc3b/a_link'
+          , '/sub/a_lnk': '/sub/49f68a5c8493ec2c0bf489821c21fc3b/a_lnk'
+          , '/sub_lnk/a': '/sub_lnk/49f68a5c8493ec2c0bf489821c21fc3b/a'
+          , '/sub_lnk/a_lnk': '/sub_lnk/49f68a5c8493ec2c0bf489821c21fc3b/a_lnk'
           }
 
         a.should.eql(results)

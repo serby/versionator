@@ -133,6 +133,15 @@ versionator.createMapFromPath(__dirname + '/public', function(error, staticFileM
 ```
 If you use the helper you can switch methods without any changes to your view code.
 
+The symlinks will be followed unless you using the following option:
+
+```js
+
+versionator.createMapFromPath(__dirname + './public', { followLinks: false },
+function(error, staticFileMap) { ... } )`
+
+```
+
 ### Live map updates
 
 You can modify the map at runtime, say if during development you want to do a live reload of a resource. First, get the hash map for the modified files by passing a list of files as a `fileList` parameter. This should be full file paths and the files should be in the original public directory. The directory is passed in as well. Then pass the the new hash map to the middleware via `modifyMap`. Then push the new url to the client and update the resource tag to cause a reload.
