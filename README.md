@@ -135,7 +135,7 @@ versionator.createMapFromPath(__dirname + '/public', function(error, staticFileM
 ```
 If you use the helper you can switch methods without any changes to your view code.
 
-The symlinks will be followed unless you using the following option:
+The symlinks will be followed unless you're using the following option:
 
 ```js
 
