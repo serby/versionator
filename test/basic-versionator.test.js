@@ -61,13 +61,12 @@ describe('versionator', function() {
   describe('basic middleware', function() {
 
     function startServer(port) {
-      var app = appEngine.createServer(
-        versionator.createBasic('v0.1.2').middleware
-        , function(req, res) {
+      var app = appEngine().use(
+        versionator.createBasic('v0.1.2').middleware)
+        .use(function(req, res) {
             res.setHeader('x-url', req.url)
             res.end(req.url)
-          }
-      )
+          })
 
       return app.listen(port)
     }

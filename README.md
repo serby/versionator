@@ -10,8 +10,9 @@ Without versionator this is what can happen:
 
 You set your static content to be cached and expire in 30 days time.
 
+```js
      express.static(__dirname + '/public', { maxAge: 2592000000 })
-
+``
 This gives you more capacity on your web servers and a better rating on Google Pagespeed and ySlow.
 
 You deploy your site and all is good.
@@ -82,7 +83,7 @@ app.configure(function() {
 
 This can then be used in Jade like so
 
-      script(src=versionPath(/js/app.js))
+      script(src=versionPath('/js/app.js'))
 
 ### Middleware
 
@@ -112,14 +113,14 @@ This can be done as the application starts or read from a file that is created o
 
 versionator.createMapFromPath(__dirname + '/public', function(error, staticFileMap) {
 
-  var mappedVersion = versionator.createMapped(staticFileMap);
+  var mappedVersion = versionator.createMapped(staticFileMap)
 
   app.configure(function(){
 
     // This exposes the local variable to the views
     app.locals({
       versionPath: mappedVersion.versionPath
-    });
+    })
 
     app
       .set('views', __dirname + '/views')
@@ -131,7 +132,7 @@ versionator.createMapFromPath(__dirname + '/public', function(error, staticFileM
   });
 
   ....
-});
+})
 ```
 If you use the helper you can switch methods without any changes to your view code.
 
@@ -155,8 +156,8 @@ You can modify the map at runtime, say if during development you want to do a li
     // modify resource files. put full file path(s) in a list.
 
     versionator.createMapFromPath(__dirname + '/public',  {'fileList': fileList}, function(error, modifiedFileMap) {
-        mappedVersion.modifyMap(modifiedFileMap);
-    )};
+        mappedVersion.modifyMap(modifiedFileMap)
+    )}
 
     // send new hashed path to client
     hashedpath = mappedVersion.versionPath(path)

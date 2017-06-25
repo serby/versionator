@@ -1,4 +1,5 @@
-var versionator = require('../')
+var assert = require('assert-diff')
+  , versionator = require('../')
   , fs = require('fs')
   , mkdirp = require('mkdirp')
   , async = require('async')
@@ -79,7 +80,7 @@ describe('versionator', function() {
           , '/sub_lnk/a': '/sub_lnk/49f68a5c8493ec2c0bf489821c21fc3b/a'
           , '/sub_lnk/a_lnk': '/sub_lnk/49f68a5c8493ec2c0bf489821c21fc3b/a_lnk'
           }
-        a.should.eql(results)
+        assert.deepEqual(a, results)
 
         done()
       })
@@ -95,7 +96,7 @@ describe('versionator', function() {
           , '/c': '/e509465ef513154988e088d6ad3c21bf/c'
           , '/sub/a': '/sub/49f68a5c8493ec2c0bf489821c21fc3b/a'
           }
-        a.should.eql(results)
+        assert.deepEqual(a, results)
 
         done()
       })
@@ -113,7 +114,7 @@ describe('versionator', function() {
           { '/c': '/e509465ef513154988e088d6ad3c21bf/c'
           , '/sub/a': '/sub/49f68a5c8493ec2c0bf489821c21fc3b/a'
           }
-        a.should.eql(results)
+        assert.deepEqual(a, results)
         done()
       })
 
@@ -140,7 +141,7 @@ describe('versionator', function() {
           , '/sub_lnk/a_lnk': '/sub_lnk/49f68a5c8493ec2c0bf489821c21fc3b/a_lnk'
           }
 
-        a.should.eql(results)
+        assert.deepEqual(a, results)
 
         done()
 

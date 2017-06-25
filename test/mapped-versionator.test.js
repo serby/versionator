@@ -84,12 +84,11 @@ describe('versionator', function() {
 
     function startServer(map, port) {
       var mapped = versionator.createMapped(map)
-        , app = appEngine.createServer(mapped.middleware
-          , function(req, res) {
+        , app = appEngine().use(mapped.middleware)
+          .use(function(req, res) {
               res.setHeader('x-url', req.url)
               res.end(req.url)
-            }
-          )
+            })
 
       return (
         { app: app.listen(port)
