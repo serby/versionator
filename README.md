@@ -2,7 +2,7 @@
 
 [![Join the chat at https://gitter.im/serby/versionator](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/serby/versionator?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-[![build status](https://secure.travis-ci.org/serby/versionator.png)](http://travis-ci.org/serby/versionator)
+[![build status](https://secure.travis-ci.org/serby/versionator.png)](http://travis-ci.org/serby/versionator) [![Greenkeeper badge](https://badges.greenkeeper.io/serby/versionator.svg)](https://greenkeeper.io/)
 
 versionator was built to solve the problem of static assets getting stuck in browser and proxy caches when new versions of the assets are deployed.
 
