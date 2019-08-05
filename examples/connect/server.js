@@ -1,6 +1,6 @@
-var version = '0.1'
-  , connect = require('connect')
-  , versionator = require('../../')
+var version = '0.1',
+  connect = require('connect'),
+  versionator = require('../../')
 
 connect(
   versionator.createBasic('v' + version).middleware,

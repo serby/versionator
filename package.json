@@ -14,29 +14,33 @@
   "scripts": {
     "lint": "jshint .",
     "pretest": "npm run-script lint",
-    "test": "istanbul cover ./node_modules/.bin/_mocha -- -R spec -r should",
-    "posttest": "istanbul check-coverage && rm -rf coverage",
+    "test": "npm run test:code",
+    "test:watch": "mocha --watch",
+    "test:code": "nyc mocha",
+    "posttest": "nyc check-coverage && rm -rf coverage",
+    "prettier": "prettier --write '**/*.js'",
     "prepublish": "npm test && npm prune"
   },
   "engines": {
     "node": ">6.0.0"
   },
   "dependencies": {
-    "async": "^2.4.1",
-    "walk": "^2.3.9"
+    "async": "^3.1.0",
+    "walk": "^2.3.14"
   },
   "devDependencies": {
-    "assert-diff": "^1.2.0",
-    "connect": "^3.6.2",
-    "express": "^4.15.3",
-    "istanbul": "~0.1.45",
+    "assert-diff": "^2.0.3",
+    "connect": "^3.7.0",
+    "express": "^4.17.1",
     "jade": "^1.11.0",
-    "jshint": "^2.3.0",
-    "jshint-full-path": "~0.1.0",
+    "jshint": "^2.10.2",
+    "jshint-full-path": "~1.1.1",
     "mkdirp": "^0.5.1",
-    "mocha": "^3.4.2",
-    "request": "^2.81.0",
-    "should": "^11.2.1"
+    "mocha": "^6.2.0",
+    "nyc": "^14.1.1",
+    "prettier": "^1.18.2",
+    "request": "^2.88.0",
+    "should": "^13.2.3"
   },
   "false": {}
 }
