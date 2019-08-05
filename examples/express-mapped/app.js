@@ -1,12 +1,13 @@
-var express = require('express'),
-  stylus = require('stylus'),
-  versionator = require('../../'),
-  app = (module.exports = express.createServer())
+var express = require('express')
+var stylus = require('stylus')
+var versionator = require('../../')
+const path = require('path')
+var app = (module.exports = express.createServer())
 
 app.version = '0.1'
 
-versionator.createMapFromPath(__dirname + '/public', function(
-  error,
+versionator.createMapFromPath(path.join(__dirname, '/public'), function(
+  ignoreError,
   staticFileMap
 ) {
   var mappedVersion = versionator.createMapped(staticFileMap)
@@ -31,19 +32,21 @@ versionator.createMapFromPath(__dirname + '/public', function(
     })
 
     app
-      .set('views', __dirname + '/views')
+      .set('views', path.join(__dirname, '/views'))
       .set('view engine', 'jade')
       .use(express.bodyParser())
       .use(express.methodOverride())
       .use(mappedVersion.middleware)
       .use(
         stylus.middleware({
-          src: __dirname + '/public/',
+          src: path.join(__dirname, '/public/'),
           compile: stylusCompile
         })
       )
       .use(app.router)
-      .use(express.static(__dirname + '/public', { maxAge: 2592000000 }))
+      .use(
+        express.static(path.join(__dirname, '/public'), { maxAge: 2592000000 })
+      )
   })
 
   app.configure('development', function() {

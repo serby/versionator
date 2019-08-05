@@ -1,8 +1,8 @@
-var assert = require('assert-diff'),
-  versionator = require('../'),
-  fs = require('fs'),
-  mkdirp = require('mkdirp'),
-  async = require('async')
+var assert = require('assert-diff')
+var versionator = require('../')
+var fs = require('fs')
+var mkdirp = require('mkdirp')
+var async = require('async')
 
 function createFiles(dirPath, files, dirs, callback) {
   var fns = [async.apply(mkdirp, dirPath + '/sub')]
@@ -49,9 +49,9 @@ function removeFiles(dirPath, files, dirs, callback) {
 }
 
 describe('versionator', function() {
-  var tmpPath = '/tmp/versionator-test',
-    files = { a: '', b: 'Hello', c: 'World!', 'sub/a': 'hi' },
-    dirs = ['sub']
+  var tmpPath = '/tmp/versionator-test'
+  var files = { a: '', b: 'Hello', c: 'World!', 'sub/a': 'hi' }
+  var dirs = ['sub']
 
   before(function(done) {
     createFiles(tmpPath, files, dirs, done)
@@ -68,7 +68,7 @@ describe('versionator', function() {
     })
 
     it('should correctly walk directory and create hashes', function(done) {
-      versionator.createMapFromPath(tmpPath, function(error, results) {
+      versionator.createMapFromPath(tmpPath, function(ignoreError, results) {
         var a = {
           '/a': '/d41d8cd98f00b204e9800998ecf8427e/a',
           '/a_lnk': '/d41d8cd98f00b204e9800998ecf8427e/a_lnk',
@@ -89,7 +89,7 @@ describe('versionator', function() {
 
     it('should not follow symlinks if specified', function(done) {
       versionator.createMapFromPath(tmpPath, { followLinks: false }, function(
-        error,
+        ignoreError,
         results
       ) {
         var a = {
@@ -107,7 +107,7 @@ describe('versionator', function() {
     it('should accept fileList and create hashes', function(done) {
       var fileList = [tmpPath + '/c', tmpPath + '/sub/a']
       versionator.createMapFromPath(tmpPath, { fileList: fileList }, function(
-        error,
+        ignoreError,
         results
       ) {
         var a = {
@@ -123,7 +123,7 @@ describe('versionator', function() {
   describe('relative paths', function() {
     it('should resolve relative paths', function(done) {
       versionator.createMapFromPath(tmpPath + '/a/..', function(
-        error,
+        ignoreError,
         results
       ) {
         var a = {

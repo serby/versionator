@@ -1,8 +1,7 @@
-var appEngine,
-  assert = require('assert'),
-  request = require('request'),
-  versionator = require('../'),
-  appEngine = require('connect')
+var assert = require('assert')
+var request = require('request')
+var versionator = require('../')
+var appEngine = require('connect')
 
 describe('versionator', function() {
   describe('#createBasic', function() {
@@ -78,7 +77,7 @@ describe('versionator', function() {
       var app = startServer(9898)
 
       request('http://localhost:9898/images/v0.1.2/sprite.png', function(
-        error,
+        ignoreError,
         response,
         data
       ) {
@@ -92,7 +91,7 @@ describe('versionator', function() {
       var app = startServer(9898)
 
       request.get('http://localhost:9898/images/v0.1.2/sprite.png', function(
-        error,
+        ignoreError,
         response,
         data
       ) {
@@ -106,7 +105,7 @@ describe('versionator', function() {
       var app = startServer(9898)
 
       request.head('http://localhost:9898/images/v0.1.2/sprite.png', function(
-        error,
+        ignoreError,
         response
       ) {
         response.headers['x-url'].should.eql('/images/sprite.png')
@@ -119,7 +118,7 @@ describe('versionator', function() {
       var app = startServer(9899)
 
       request('http://localhost:9899/images/sprite.png', function(
-        error,
+        ignoreError,
         response,
         data
       ) {

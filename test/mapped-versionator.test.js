@@ -1,7 +1,6 @@
-var appEngine,
-  request = require('request'),
-  versionator = require('../'),
-  appEngine = require('connect')
+var request = require('request')
+var versionator = require('../')
+var appEngine = require('connect')
 
 describe('versionator', function() {
   describe('#createMapped', function() {
@@ -101,13 +100,13 @@ describe('versionator', function() {
 
   describe('mapped middleware', function() {
     function startServer(map, port) {
-      var mapped = versionator.createMapped(map),
-        app = appEngine()
-          .use(mapped.middleware)
-          .use(function(req, res) {
-            res.setHeader('x-url', req.url)
-            res.end(req.url)
-          })
+      var mapped = versionator.createMapped(map)
+      var app = appEngine()
+        .use(mapped.middleware)
+        .use(function(req, res) {
+          res.setHeader('x-url', req.url)
+          res.end(req.url)
+        })
 
       return { app: app.listen(port), mapped: mapped }
     }
@@ -116,7 +115,7 @@ describe('versionator', function() {
       var app = startServer({}, 9900).app
 
       request('http://localhost:9900/images/sprite.png', function(
-        error,
+        ignoreError,
         response,
         data
       ) {
@@ -134,7 +133,7 @@ describe('versionator', function() {
 
       request.get(
         'http://localhost:9901/images/VERSIONHASH/sprite.png',
-        function(error, response, data) {
+        function(ignoreError, response, data) {
           data.should.eql('/images/sprite.png')
           app.close()
           done()
@@ -150,7 +149,7 @@ describe('versionator', function() {
 
       request.head(
         'http://localhost:9901/images/VERSIONHASH/sprite.png',
-        function(error, response) {
+        function(ignoreError, response) {
           response.headers['x-url'].should.eql('/images/sprite.png')
           app.close()
           done()
@@ -166,7 +165,7 @@ describe('versionator', function() {
 
       request.post(
         'http://localhost:9901/images/VERSIONHASH/sprite.png',
-        function(error, response) {
+        function(ignoreError, response) {
           response.headers['x-url'].should.eql('/images/VERSIONHASH/sprite.png')
           app.close()
           done()
@@ -181,7 +180,7 @@ describe('versionator', function() {
       ).app
 
       request('http://localhost:9901/images/VERSIONHASH/sprite.png', function(
-        error,
+        ignoreError,
         response,
         data
       ) {
@@ -199,7 +198,7 @@ describe('versionator', function() {
 
       request(
         'http://localhost:9901/images/VERSIONHASH/sprite.png?key=val',
-        function(error, response, data) {
+        function(ignoreError, response, data) {
           data.should.eql('/images/sprite.png?key=val')
           app.close()
           done()
@@ -215,7 +214,7 @@ describe('versionator', function() {
 
       request(
         'http://localhost:9901/images/VERSIONHASH/sprite.png?key=val#hashy',
-        function(error, response, data) {
+        function(ignoreError, response, data) {
           // #hash isn't sent to the server, so you shouldn't see it.
           data.should.eql('/images/sprite.png?key=val')
           app.close()
@@ -226,16 +225,16 @@ describe('versionator', function() {
 
     it('req.url mapped url is mapped correctly after hash change', function(done) {
       var appObj = startServer(
-          { '/images/sprite.png': '/images/VERSIONHASH/sprite.png' },
-          9902
-        ),
-        app = appObj.app,
-        mapped = appObj.mapped
+        { '/images/sprite.png': '/images/VERSIONHASH/sprite.png' },
+        9902
+      )
+      var app = appObj.app
+      var mapped = appObj.mapped
 
       mapped.modifyMap({ '/images/sprite.png': '/images/OTHERHASH/sprite.png' })
 
       request('http://localhost:9902/images/OTHERHASH/sprite.png', function(
-        error,
+        ignoreError,
         response,
         data
       ) {
