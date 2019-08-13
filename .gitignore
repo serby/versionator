@@ -33,3 +33,4 @@ Icon?
 *.sock
 
 /coverage
+.nyc_output

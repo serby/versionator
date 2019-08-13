@@ -1,1 +1,3 @@
-alert('Example script loaded');
+/* eslint no-alert: 0 */
+
+alert('Example script loaded')
