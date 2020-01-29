@@ -72,13 +72,21 @@ describe('versionator', function() {
         mapped.modifyMap({ '/js/test.js': '/js/OTHERHASH/test.js' })
         mapped.versionPath('/js/test.js').should.eql('/js/OTHERHASH/test.js')
       })
-      it('strings without a "/" will be left unchanged', function() {
+      it('strings without a "/" will be encoded correctly', function() {
         var mapped = versionator.createMapped({
           '/js/test.js': '/js/HASH/test.js'
         })
         mapped
           .versionPath('Hello this is an odd path')
-          .should.eql('Hello this is an odd path')
+          .should.eql('Hello%20this%20is%20an%20odd%20path')
+      })
+      it('strings with a hash and no match will be encoded correctly', function() {
+        var mapped = versionator.createMapped({
+          '/js/test.js': '/js/HASH/test.js'
+        })
+        mapped
+          .versionPath('/test/ing#hashparam')
+          .should.eql('/test/ing#hashparam')
       })
 
       it('should convert all URLs in an array', function() {
